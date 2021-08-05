@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .top {
+        width: 100%;
+        height: 80px;
+        background-color: rgb(240, 240, 240);
+      }
+      .a {
+        display: flex;
+        list-style: none;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .b {
+        display: inline-block;
+        width: 300px;
+        height: 100%;
+        text-align: center;
+        line-height: 80px;
+      }
+      .bottom {
+        width: 100%;
+        height: 80px;
+        background-color: rgb(204, 204, 204);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .bxinput {
+        width: 80%;
+        height: 70%;
+        overflow: hidden;
+      }
+      .search {
+        width: 100%;
+        height: 100%;
+        text-indent: 30px;
+        border-radius: 30px;
+        box-sizing: border-box;
+        outline: none;
+        border: 2px solid #fff;
+        font-size: 20px;
+      }
+      input:focus {
+        border: 2px solid #f50;
+      }
+      .list {
+        width: 80%;
+        margin: 0 auto;
+      }
+      .c {
+        list-style: none;
+      }
+      .d {
+        width: 98%;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px dashed #ccc;
+      }
+      .right {
+        display: inline-block;
+      }
+      .ck {
+        margin-right: 20px;
+        vertical-align: middle;
+        width: 26px;
+        height: 26px;
+      }
+      .del {
+        margin-right: 20px;
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="top">
+        <ul class="a">
+          <li class="b">任务总数【<span>0</span>】</li>
+          <li class="b">进行中【<span>0</span>】</li>
+          <li class="b">已完成【<span>0</span>】</li>
+        </ul>
+      </div>
+      <div class="bottom">
+        <div class="bxinput">
+          <input type="text" class="search" placeholder="请输入任务" />
+        </div>
+      </div>
+      <div class="list">
+        <ul class="c">
+          <!-- <li class="d">
+            <span>这是任务</span>
+            <div class="right">
+              <input type="checkbox" class="ck" />
+              <a href="#" class="del">删除</a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <script>
+      function func(o) {
+        this.all = 0;
+        this.ing = 0;
+        this.done = 0;
+        this.input = o.data.input;
+        this.ul = o.data.ul;
+      }
+
+      func.prototype.init = function () {
+        this.inputEvent();
+        // this.creatLi();
+      };
+
+      func.prototype.inputEvent = function () {
+        this.input.onkeydown = (e) => {
+          if (e.keyCode === 13) {
+            let currentvalue = this.input.value;
+            console.log(currentvalue);
+            this.input.value = "";
+            if (currentvalue == "") {
+              alert("内容不能为空");
+            } else {
+              this.creatLi(currentvalue);
+            }
+          }
+        };
+      };
+
+      func.prototype.creatLi = function (value) {
+        let newLi = document.createElement("li");
+        newLi.classList.add("d");
+        let str = ``;
+        str += `
+        <span>${value}</span>
+            <div class="right">
+              <input type="checkbox" class="ck" />
+              <a href="#" class="del">删除</a>
+            </div>
+        `;
+        newLi.innerHTML = str;
+        this.ul.appendChild(newLi);
+      };
+
+      let app = new func({
+        data: {
+          input: document.querySelector("input"),
+          ul: document.querySelector(".c"),
+        },
+      });
+
+      app.init();
+      
+    </script>
+  </body>
+</html>
